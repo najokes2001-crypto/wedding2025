@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты najokes2001-crypto</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            font-size: 24px;
+            overflow-x: hidden;
+        }
+        
+        .main {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2 {
+            color: #555;
+            margin: 15px 0;
+            font-size: 32px;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .project-card {
+            background: linear-gradient(45deg, #f3e5f5, #e8eaf6);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .project-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #e91e63;
+        }
+        
+        .project-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .project-description {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #e91e63, #ff4081);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .project-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(233,30,99,0.4);
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 22px;
+            font-style: italic;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #f00;
+            opacity: 0.8;
+            border-radius: 0;
+            animation: confettiFall 5s linear forwards;
+            z-index: 100;
+        }
+        
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(1000px) rotate(720deg); opacity: 0; }
+        }
+        
+        @media (max-width: 1024px) {
+            body {
+                font-size: 20px;
+                padding: 5px;
+            }
+            
+            .main {
+                padding: 20px;
+                margin: 5px;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            h2 {
+                font-size: 26px;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .project-icon {
+                font-size: 50px;
+            }
+            
+            .project-title {
+                font-size: 24px;
+            }
+            
+            .project-description {
+                font-size: 18px;
+            }
+            
+            .project-link {
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 32px;
+            }
+            
+            .project-card {
+                padding: 20px;
+            }
+            
+            .project-icon {
+                font-size: 45px;
+            }
+            
+            .project-title {
+                font-size: 22px;
+            }
+            
+            .project-description {
+                font-size: 16px;
+            }
+            
+            .project-link {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+            
+            footer {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='main'>
+        <h1>✨ Мои проекты ✨</h1>
+        
+        <div class="project-grid">
+            <div class="project-card">
+                <i class="project-icon fas fa-ring"></i>
+                <div class="project-title">Свадебная игра</div>
+                <div class="project-description">Интерактивная игра для гостей свадьбы с угадыванием имен по фотографиям</div>
+                <a href="https://najokes2001-crypto.github.io/wedding_game" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <div class="project-card">
+                <i class="project-icon fas fa-venus-mars"></i>
+                <div class="project-title">He or She</div>
+                <div class="project-description">Интересная игра для определения пола или других характеристик</div>
+                <a href="https://najokes2001-crypto.github.io/heorshe" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <div class="project-card">
+                <i class="project-icon fas fa-random"></i>
+                <div class="project-title">Рандомайзер</div>
+                <div class="project-description">Инструмент для случайного выбора или генерации случайных значений</div>
+                <a href="https://najokes2001-crypto.github.io/randomizer" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <div class="project-card">
+                <i class="project-icon fas fa-envelope"></i>
+                <div class="project-title">Свадебное приглашение</div>
+                <div class="project-description">Элегантное цифровое приглашение на свадебное торжество</div>
+                <a href="https://najokes2001-crypto.github.io/wedding-invitation" class="project-link" target="_blank">Открыть</a>
+            </div>
+        </div>
+        
+        <footer>najokes2001-crypto projects</footer>
+    </div>
+    
+    <script>
+        // Создаем конфетти для праздничного эффекта
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const container = $('.main');
+            
+            for (let i = 0; i < 20; i++) {
+                const confetti = $('<div class="confetti"></div>');
+                confetti.css({
+                    left: Math.random() * 100 + '%',
+                    background: colors[Math.floor(Math.random() * colors.length)],
+                    transform: 'rotate(' + (Math.random() * 360) + 'deg)'
+                });
+                
+                container.append(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // Запускаем конфетти при загрузке страницы
+        $(document).ready(function() {
+            createConfetti();
+            
+            // Добавляем дополнительное конфетти при клике на любую карточку
+            $('.project-card').click(function() {
+                createConfetti();
+            });
+        });
+    </script>
+</body>
+</html>
