@@ -137,6 +137,79 @@
             100% { transform: translateY(1000px) rotate(720deg); opacity: 0; }
         }
         
+        /* Модальное окно для пароля */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .modal h2 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #e91e63;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        
+        .password-submit {
+            background: linear-gradient(45deg, #e91e63, #ff4081);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .password-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 10px rgba(233,30,99,0.4);
+        }
+        
+        .error-message {
+            color: #f44336;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .admin-access {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .admin-access i {
+            color: #4caf50;
+            margin-right: 10px;
+        }
+        
         @media (max-width: 1024px) {
             body {
                 font-size: 20px;
@@ -208,42 +281,35 @@
             footer {
                 font-size: 18px;
             }
+            
+            .modal-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Модальное окно для ввода пароля -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h2>Доступ к закрытым проектам</h2>
+            <p>Введите пароль для просмотра всех проектов:</p>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Введите пароль">
+            <button class="password-submit" id="passwordSubmit">Войти</button>
+            <div class="error-message" id="errorMessage">Неверный пароль. Попробуйте снова.</div>
+        </div>
+    </div>
+    
     <div class='main'>
         <h1>✨ Навигация по ссылочкам ✨</h1>
         
+        <!-- Сообщение о доступе администратора -->
+        <div class="admin-access" id="adminAccess">
+            <i class="fas fa-check-circle"></i> Доступ к закрытым проектам разрешен
+        </div>
+        
         <div class="project-grid">
-            <div class="project-card">
-                <i class="project-icon fas fa-ring"></i>
-                <div class="project-title">Свадебная игра</div>
-                <div class="project-description">Интерактивная игра для гостей свадьбы с угадыванием имен по фотографиям</div>
-                <a href="https://najokes2001-crypto.github.io/wedding_game" class="project-link" target="_blank">Открыть</a>
-            </div>
-            
-            <div class="project-card">
-                <i class="project-icon fas fa-gamepad"></i>
-                <div class="project-title">Свадебная игра 2</div>
-                <div class="project-description">Еще одна увлекательная игра для свадебного торжества</div>
-                <a href="https://najokes2001-crypto.github.io/wedding_gaming/" class="project-link" target="_blank">Открыть</a>
-            </div>
-            
-            <div class="project-card">
-                <i class="project-icon fas fa-venus-mars"></i>
-                <div class="project-title">He or She</div>
-                <div class="project-description">Интересная игра "Кто из Вас?"</div>
-                <a href="https://najokes2001-crypto.github.io/heorshe" class="project-link" target="_blank">Открыть</a>
-            </div>
-            
-            <div class="project-card">
-                <i class="project-icon fas fa-random"></i>
-                <div class="project-title">Рандомайзер</div>
-                <div class="project-description">Инструмент для случайного выбора или генерации случайных значений</div>
-                <a href="https://najokes2001-crypto.github.io/randomizer" class="project-link" target="_blank">Открыть</a>
-            </div>
-            
+            <!-- Открытые проекты -->
             <div class="project-card">
                 <i class="project-icon fas fa-envelope"></i>
                 <div class="project-title">Свадебное приглашение</div>
@@ -263,6 +329,35 @@
                 <div class="project-title">Турнирная таблица по бильярду</div>
                 <div class="project-description">Актуальная турнирная таблица и результаты соревнований по бильярду</div>
                 <a href="/bil" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <div class="project-card">
+                <i class="project-icon fas fa-venus-mars"></i>
+                <div class="project-title">He or She</div>
+                <div class="project-description">Интересная игра "Кто из Вас?"</div>
+                <a href="https://najokes2001-crypto.github.io/heorshe" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <!-- Закрытые проекты (скрыты по умолчанию) -->
+            <div class="project-card admin-only" style="display: none;">
+                <i class="project-icon fas fa-ring"></i>
+                <div class="project-title">Свадебная игра</div>
+                <div class="project-description">Интерактивная игра для гостей свадьбы с угадыванием имен по фотографиям</div>
+                <a href="https://najokes2001-crypto.github.io/wedding_game" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <div class="project-card admin-only" style="display: none;">
+                <i class="project-icon fas fa-gamepad"></i>
+                <div class="project-title">Свадебная игра 2</div>
+                <div class="project-description">Еще одна увлекательная игра для свадебного торжества</div>
+                <a href="https://najokes2001-crypto.github.io/wedding_gaming/" class="project-link" target="_blank">Открыть</a>
+            </div>
+            
+            <div class="project-card admin-only" style="display: none;">
+                <i class="project-icon fas fa-random"></i>
+                <div class="project-title">Рандомайзер</div>
+                <div class="project-description">Инструмент для случайного выбора или генерации случайных значений</div>
+                <a href="https://najokes2001-crypto.github.io/randomizer" class="project-link" target="_blank">Открыть</a>
             </div>
         </div>
         
@@ -291,9 +386,43 @@
             }
         }
         
-        // Запускаем конфетти при загрузке страницы
+        // Проверяем, есть ли доступ в localStorage
+        function checkAdminAccess() {
+            const hasAccess = localStorage.getItem('adminAccess') === 'granted';
+            if (hasAccess) {
+                $('.admin-only').show();
+                $('#adminAccess').show();
+            } else {
+                $('#passwordModal').show();
+            }
+        }
+        
+        // Обработчик ввода пароля
+        function handlePasswordSubmit() {
+            const password = $('#passwordInput').val();
+            if (password === 'admin123') {
+                localStorage.setItem('adminAccess', 'granted');
+                $('.admin-only').show();
+                $('#adminAccess').show();
+                $('#passwordModal').hide();
+                createConfetti();
+            } else {
+                $('#errorMessage').show();
+                $('#passwordInput').val('');
+            }
+        }
+        
+        // Запускаем при загрузке страницы
         $(document).ready(function() {
-            createConfetti();
+            checkAdminAccess();
+            
+            // Обработчики событий
+            $('#passwordSubmit').click(handlePasswordSubmit);
+            $('#passwordInput').keypress(function(e) {
+                if (e.which === 13) {
+                    handlePasswordSubmit();
+                }
+            });
             
             // Добавляем дополнительное конфетти при клике на любую карточку
             $('.project-card').click(function() {
