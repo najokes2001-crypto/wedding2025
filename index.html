@@ -137,6 +137,32 @@
             100% { transform: translateY(1000px) rotate(720deg); opacity: 0; }
         }
         
+        /* Кнопка админа */
+        .admin-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #e91e63, #ff4081);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(233,30,99,0.4);
+        }
+        
         /* Модальное окно для пароля */
         .modal {
             display: none;
@@ -197,17 +223,24 @@
             display: none;
         }
         
-        .admin-access {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e8f5e9;
-            border-radius: 10px;
+        .admin-panel {
             display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 15px;
+            border: 2px dashed #e91e63;
         }
         
-        .admin-access i {
-            color: #4caf50;
-            margin-right: 10px;
+        .admin-panel h2 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+        
+        .admin-project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
         
         @media (max-width: 1024px) {
@@ -250,6 +283,12 @@
                 font-size: 18px;
                 padding: 10px 20px;
             }
+            
+            .admin-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -285,15 +324,28 @@
             .modal-content {
                 padding: 20px;
             }
+            
+            .admin-button {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Кнопка админа -->
+    <button class="admin-button" id="adminButton" title="Доступ администратора">
+        <i class="fas fa-lock"></i>
+    </button>
+    
     <!-- Модальное окно для ввода пароля -->
     <div class="modal" id="passwordModal">
         <div class="modal-content">
-            <h2>Доступ к закрытым проектам</h2>
-            <p>Введите пароль для просмотра всех проектов:</p>
+            <h2>Доступ администратора</h2>
+            <p>Введите пароль для доступа к админ-панели:</p>
             <input type="password" class="password-input" id="passwordInput" placeholder="Введите пароль">
             <button class="password-submit" id="passwordSubmit">Войти</button>
             <div class="error-message" id="errorMessage">Неверный пароль. Попробуйте снова.</div>
@@ -303,13 +355,8 @@
     <div class='main'>
         <h1>✨ Навигация по ссылочкам ✨</h1>
         
-        <!-- Сообщение о доступе администратора -->
-        <div class="admin-access" id="adminAccess">
-            <i class="fas fa-check-circle"></i> Доступ к закрытым проектам разрешен
-        </div>
-        
         <div class="project-grid">
-            <!-- Открытые проекты -->
+            <!-- Все проекты видны сразу -->
             <div class="project-card">
                 <i class="project-icon fas fa-envelope"></i>
                 <div class="project-title">Свадебное приглашение</div>
@@ -337,27 +384,32 @@
                 <div class="project-description">Интересная игра "Кто из Вас?"</div>
                 <a href="https://najokes2001-crypto.github.io/heorshe" class="project-link" target="_blank">Открыть</a>
             </div>
-            
-            <!-- Закрытые проекты (скрыты по умолчанию) -->
-            <div class="project-card admin-only" style="display: none;">
-                <i class="project-icon fas fa-ring"></i>
-                <div class="project-title">Свадебная игра</div>
-                <div class="project-description">Интерактивная игра для гостей свадьбы с угадыванием имен по фотографиям</div>
-                <a href="https://najokes2001-crypto.github.io/wedding_game" class="project-link" target="_blank">Открыть</a>
-            </div>
-            
-            <div class="project-card admin-only" style="display: none;">
-                <i class="project-icon fas fa-gamepad"></i>
-                <div class="project-title">Свадебная игра 2</div>
-                <div class="project-description">Еще одна увлекательная игра для свадебного торжества</div>
-                <a href="https://najokes2001-crypto.github.io/wedding_gaming/" class="project-link" target="_blank">Открыть</a>
-            </div>
-            
-            <div class="project-card admin-only" style="display: none;">
-                <i class="project-icon fas fa-random"></i>
-                <div class="project-title">Рандомайзер</div>
-                <div class="project-description">Инструмент для случайного выбора или генерации случайных значений</div>
-                <a href="https://najokes2001-crypto.github.io/randomizer" class="project-link" target="_blank">Открыть</a>
+        </div>
+        
+        <!-- Админ-панель (скрыта по умолчанию) -->
+        <div class="admin-panel" id="adminPanel">
+            <h2><i class="fas fa-crown"></i> Админ-панель</h2>
+            <div class="admin-project-grid">
+                <div class="project-card">
+                    <i class="project-icon fas fa-ring"></i>
+                    <div class="project-title">Свадебная игра</div>
+                    <div class="project-description">Интерактивная игра для гостей свадьбы с угадыванием имен по фотографиям</div>
+                    <a href="https://najokes2001-crypto.github.io/wedding_game" class="project-link" target="_blank">Открыть</a>
+                </div>
+                
+                <div class="project-card">
+                    <i class="project-icon fas fa-gamepad"></i>
+                    <div class="project-title">Свадебная игра 2</div>
+                    <div class="project-description">Еще одна увлекательная игра для свадебного торжества</div>
+                    <a href="https://najokes2001-crypto.github.io/wedding_gaming/" class="project-link" target="_blank">Открыть</a>
+                </div>
+                
+                <div class="project-card">
+                    <i class="project-icon fas fa-random"></i>
+                    <div class="project-title">Рандомайзер</div>
+                    <div class="project-description">Инструмент для случайного выбора или генерации случайных значений</div>
+                    <a href="https://najokes2001-crypto.github.io/randomizer" class="project-link" target="_blank">Открыть</a>
+                </div>
             </div>
         </div>
         
@@ -390,10 +442,9 @@
         function checkAdminAccess() {
             const hasAccess = localStorage.getItem('adminAccess') === 'granted';
             if (hasAccess) {
-                $('.admin-only').show();
-                $('#adminAccess').show();
-            } else {
-                $('#passwordModal').show();
+                $('#adminPanel').show();
+                $('#adminButton').html('<i class="fas fa-unlock"></i>');
+                $('#adminButton').attr('title', 'Админ-панель открыта');
             }
         }
         
@@ -402,8 +453,9 @@
             const password = $('#passwordInput').val();
             if (password === 'admin123') {
                 localStorage.setItem('adminAccess', 'granted');
-                $('.admin-only').show();
-                $('#adminAccess').show();
+                $('#adminPanel').show();
+                $('#adminButton').html('<i class="fas fa-unlock"></i>');
+                $('#adminButton').attr('title', 'Админ-панель открыта');
                 $('#passwordModal').hide();
                 createConfetti();
             } else {
@@ -417,6 +469,19 @@
             checkAdminAccess();
             
             // Обработчики событий
+            $('#adminButton').click(function() {
+                if (localStorage.getItem('adminAccess') === 'granted') {
+                    // Переключение видимости админ-панели
+                    if ($('#adminPanel').is(':visible')) {
+                        $('#adminPanel').hide();
+                    } else {
+                        $('#adminPanel').show();
+                    }
+                } else {
+                    $('#passwordModal').show();
+                }
+            });
+            
             $('#passwordSubmit').click(handlePasswordSubmit);
             $('#passwordInput').keypress(function(e) {
                 if (e.which === 13) {
